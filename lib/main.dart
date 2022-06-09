@@ -28,36 +28,64 @@ class Orbit extends StatefulWidget {
 class _Orbit extends State<Orbit> with TickerProviderStateMixin {
   late AnimationController controllerx;
   late AnimationController controllery;
-
+  bool showEffectRotation = false;
   @override
   void initState() {
     super.initState();
     controllerx = AnimationController(vsync: this);
-    controllerx.repeat(min: 0.0, max: 1.0, period: const Duration(seconds: 20));
-
     controllery = AnimationController(vsync: this);
+  }
+
+  void startRotation() {
+    controllerx.repeat(min: 0.0, max: 1.0, period: const Duration(seconds: 20));
     controllery.repeat(min: 0.0, max: 1.0, period: const Duration(seconds: 20));
+    setState(() {
+      showEffectRotation = true;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
-      children: <Widget>[
-        Container(
-          width: 215,
-          height: 215,
-          decoration: const BoxDecoration(
-            // color: const Color(0xFF0C7D0D).withOpacity(0.2),
-            borderRadius: BorderRadius.all(
-              Radius.circular(120),
-            ),
-            image: DecorationImage(
-              image: AssetImage("assets/images/pic.jpeg"),
-              fit: BoxFit.cover,
+      children: [
+        GestureDetector(
+          onTap: () => startRotation(),
+          child: Container(
+            width: 215,
+            height: 215,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: AssetImage("assets/images/pic.jpeg"),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),
+        showEffectRotation
+            ? ObitAnimation(controllerx: controllerx, controllery: controllery)
+            : const SizedBox.shrink(),
+      ],
+    );
+  }
+}
+
+class ObitAnimation extends StatelessWidget {
+  const ObitAnimation({
+    Key? key,
+    required this.controllerx,
+    required this.controllery,
+  }) : super(key: key);
+
+  final AnimationController controllerx;
+  final AnimationController controllery;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: <Widget>[
         RotationTransition(
           turns: controllerx,
           child: Align(
@@ -65,7 +93,7 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
             child: Container(
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(30)),
-                color: Colors.green,
+                color: Color.fromARGB(255, 42, 0, 231),
               ),
               height: 50.0,
               width: 50.0,
@@ -79,7 +107,7 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
             child: Container(
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(30)),
-                color: Colors.red,
+                color: Color.fromARGB(255, 255, 17, 0),
               ),
               height: 50.0,
               width: 50.0,
