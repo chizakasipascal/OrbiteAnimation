@@ -8,15 +8,7 @@ class OrbiteAnimation extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: themeData,
-      home: Scaffold(
-        body: Center(
-          child: SizedBox(
-            width: double.infinity,
-            height: double.infinity,
-            child: Orbit(),
-          ),
-        ),
-      ),
+      home: Orbit(),
     );
   }
 }
