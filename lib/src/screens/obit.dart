@@ -132,17 +132,15 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
                 }
               },
               feedback: SizedBox(
-                height: 150,
-                width: 150,
+                height: 100,
+                width: 100,
                 child: ObitAnimation(
                     controllerx: controllerx2, controllery: controllery2),
               ),
-              child: Center(
-                child: Container(
-                  height: 200,
-                  width: 200,
-                  color: Colors.green,
-                ),
+              child: Container(
+                height: 150,
+                width: 150,
+                color: Colors.red,
               ),
             ),
           );
@@ -181,150 +179,157 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
               width: MediaQuery.of(context).size.width,
               child: Stack(
                 children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(
-                        child: SizedBox(
-                          width: 250,
-                          height: 250,
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              GestureDetector(
-                                onTap: () => startRotation(
-                                    showEffectRotationLongPresse ? 2 : 20,
-                                    showEffectRotationLongPresse ? 2 : 20),
-                                child: Container(
-                                  width: 215,
-                                  height: 215,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      image:
-                                          AssetImage("assets/images/pic.jpeg"),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
+                  Positioned(
+                    top: 80,
+                    left: 0,
+                    right: 0,
+                    child: SizedBox(
+                      width: 200,
+                      height: 200,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () => startRotation(20, 20),
+                            child: Container(
+                              width: 170,
+                              height: 170,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: AssetImage("assets/images/pic.jpeg"),
+                                  fit: BoxFit.cover,
                                 ),
                               ),
-                              showEffectRotation
-                                  ? ObitAnimation(
-                                      controllerx: controllerx,
-                                      controllery: controllery)
-                                  : const SizedBox.shrink(),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: size.width - 20,
-                        height: 130,
-                        child: Card(
-                          elevation: 2.0,
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "RTC - Mensuel - General",
-                                  style: themeData.textTheme.bodyText2!
-                                      .copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16.0),
-                                ),
-                                const SizedBox(height: 5),
-                                const Center(
-                                    child: Text("Periode de validite")),
-                                const SizedBox(height: 5),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      children: [
-                                        Text(
-                                          "2022-05-01",
-                                          style: themeData.textTheme.bodyText2!
-                                              .copyWith(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16.0),
-                                        ),
-                                        const Text("00:00"),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          "2022-05-31",
-                                          style: themeData.textTheme.bodyText2!
-                                              .copyWith(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16.0),
-                                        ),
-                                        const Text("23:59")
-                                      ],
-                                    )
-                                  ],
-                                )
-                              ],
                             ),
                           ),
-                        ),
+                          showEffectRotation
+                              ? ObitAnimation(
+                                  controllerx: controllerx,
+                                  controllery: controllery)
+                              : const SizedBox.shrink(),
+                        ],
                       ),
-                      const SizedBox(height: 10.0),
-                      SizedBox(
-                        width: size.width - 20,
-                        height: 130,
-                        child: Card(
-                          elevation: 2.0,
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Stack(
-                              children: [
-                                const Positioned(
-                                  left: 10,
-                                  top: 0,
-                                  bottom: 0,
-                                  child: SizedBox(
-                                    height: 50,
-                                    width: 50,
-                                    child: Icon(
-                                      Icons.person,
-                                      size: 30,
-                                    ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 10,
+                    left: 0,
+                    right: 0,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: size.width - 20,
+                          height: 130,
+                          child: Card(
+                            elevation: 2.0,
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "RTC - Mensuel - General",
+                                    style: themeData.textTheme.bodyText2!
+                                        .copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16.0),
                                   ),
-                                ),
-                                Center(
-                                  child: Column(
+                                  const SizedBox(height: 5),
+                                  const Center(
+                                      child: Text("Periode de validite")),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text("Reserve au RTC",
-                                          style: themeData.textTheme.bodyText2),
-                                      Text(
-                                        "2022-05-09",
-                                        style: themeData.textTheme.bodyText2!
-                                            .copyWith(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16.0),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            "2022-05-01",
+                                            style: themeData
+                                                .textTheme.bodyText2!
+                                                .copyWith(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16.0),
+                                          ),
+                                          const Text("00:00"),
+                                        ],
                                       ),
-                                      const Text("17:01"),
-                                      Text(
-                                        "1-6E62C86342A",
-                                        style: themeData.textTheme.bodyText2!
-                                            .copyWith(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16.0),
-                                      ),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            "2022-05-31",
+                                            style: themeData
+                                                .textTheme.bodyText2!
+                                                .copyWith(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16.0),
+                                          ),
+                                          const Text("23:59")
+                                        ],
+                                      )
                                     ],
-                                  ),
-                                ),
-                              ],
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 10.0),
+                        SizedBox(
+                          width: size.width - 20,
+                          height: 130,
+                          child: Card(
+                            elevation: 2.0,
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Stack(
+                                children: [
+                                  const Positioned(
+                                    left: 10,
+                                    top: 0,
+                                    bottom: 0,
+                                    child: SizedBox(
+                                      height: 50,
+                                      width: 50,
+                                      child: Icon(
+                                        Icons.person,
+                                        size: 30,
+                                      ),
+                                    ),
+                                  ),
+                                  Center(
+                                    child: Column(
+                                      children: [
+                                        Text("Reserve au RTC",
+                                            style:
+                                                themeData.textTheme.bodyText2),
+                                        Text(
+                                          "2022-05-09",
+                                          style: themeData.textTheme.bodyText2!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16.0),
+                                        ),
+                                        const Text("17:01"),
+                                        Text(
+                                          "1-6E62C86342A",
+                                          style: themeData.textTheme.bodyText2!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16.0),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   Center(
                     child: buildDragTarget(data[0]),
