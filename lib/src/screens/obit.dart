@@ -24,7 +24,7 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
     controllery = AnimationController(vsync: this);
     controllerx2 = AnimationController(vsync: this);
     controllery2 = AnimationController(vsync: this);
-    startRotation(1, 1);
+    startRotation(20, 20);
   }
 
   @override
