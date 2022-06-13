@@ -24,6 +24,7 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
     controllery = AnimationController(vsync: this);
     controllerx2 = AnimationController(vsync: this);
     controllery2 = AnimationController(vsync: this);
+    startRotation(1, 1);
   }
 
   @override
@@ -93,9 +94,7 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
 
   DragTarget buildDragTarget(Content content) => DragTarget(
         builder: (context, candidateData, rejectedData) {
-          GlobalKey key = LabeledGlobalKey(
-            content.num.toString(),
-          );
+          GlobalKey key = LabeledGlobalKey('');
 
           return Listener(
             onPointerDown: (details) {
@@ -115,11 +114,11 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
                 }
               }
             },
-            child: LongPressDraggable(
+            child: Draggable(
               key: key,
               data: content.num,
               maxSimultaneousDrags: 1,
-              hapticFeedbackOnStart: true,
+              // hapticFeedbackOnStart: true,
               onDragStarted: () {
                 if (!isMenuOpen) {
                   openMenu(key);
@@ -130,8 +129,8 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
                 }
               },
               feedback: SizedBox(
-                height: 100,
-                width: 100,
+                height: 200,
+                width: 200,
                 child: ObitAnimation(
                   controllerx: controllerx2,
                   controllery: controllery2,
@@ -164,12 +163,14 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
           print('2');
         },
         onLeave: (data) {
-          setState(() {
-            if (showEffectRotation = false) {
-              startRotation(20, 20);
-            }
-            print('3');
-          });
+          if (data == 0) {
+            data = 2;
+            // setState(() {
+            //   startRotation(20, 20);
+            // });
+
+            print('3 ${data.toString()}');
+          }
         },
       );
 
@@ -198,46 +199,8 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: Stack(
+                fit: StackFit.expand,
                 children: [
-                  Center(
-                    child: buildDragTarget(data[0]),
-                  ),
-                  Positioned(
-                    top: 80,
-                    left: 0,
-                    right: 0,
-                    child: SizedBox(
-                      width: 200,
-                      height: 200,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              startRotation(20, 20);
-                            },
-                            child: Container(
-                              width: 170,
-                              height: 170,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: AssetImage("assets/images/pic.png"),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          ),
-                          showEffectRotation
-                              ? ObitAnimation(
-                                  controllerx: controllerx,
-                                  controllery: controllery)
-                              : const SizedBox.shrink(),
-                        ],
-                      ),
-                    ),
-                  ),
                   Positioned(
                     bottom: 0,
                     left: 0,
@@ -360,7 +323,7 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
                           height: 10,
                           child: const ClipRRect(
                             child: LinearProgressIndicator(
-                              value: 0.7,
+                              value: 0.5,
                               valueColor: AlwaysStoppedAnimation<Color>(
                                 Color.fromARGB(255, 0, 147, 0),
                               ),
@@ -369,6 +332,40 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
                           ),
                         )
                       ],
+                    ),
+                  ),
+                  Center(
+                    child: buildDragTarget(data[0]),
+                  ),
+                  Positioned(
+                    top: 80,
+                    left: 0,
+                    right: 0,
+                    child: SizedBox(
+                      width: 200,
+                      height: 200,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            width: 170,
+                            height: 170,
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: AssetImage("assets/images/pic.png"),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          showEffectRotation
+                              ? ObitAnimation(
+                                  controllerx: controllerx,
+                                  controllery: controllery)
+                              : const SizedBox.shrink(),
+                        ],
+                      ),
                     ),
                   ),
                 ],
