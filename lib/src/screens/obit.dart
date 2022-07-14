@@ -16,9 +16,7 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
   late AnimationController controllerx, controllerx2;
   late AnimationController controllery, controllery2;
   bool showEffectRotation = false;
-  bool showEffectRotationLongPresse = false;
-  double posx = 100.0;
-  double posy = 100.0;
+
   @override
   void initState() {
     super.initState();
@@ -26,6 +24,7 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
     controllery = AnimationController(vsync: this);
     controllerx2 = AnimationController(vsync: this);
     controllery2 = AnimationController(vsync: this);
+    startRotation(20, 20);
   }
 
   @override
@@ -37,15 +36,9 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
 
   void startRotation(int durationx, int durationy) {
     controllerx.repeat(
-        min: 0.0,
-        max: 1.0,
-        period:
-            Duration(seconds: showEffectRotationLongPresse ? 2 : durationx));
+        min: 0.0, max: 1.0, period: Duration(seconds: durationx));
     controllery.repeat(
-        min: 0.0,
-        max: 1.0,
-        period:
-            Duration(seconds: showEffectRotationLongPresse ? 2 : durationy));
+        min: 0.0, max: 1.0, period: Duration(seconds: durationy));
 
     setState(() {
       showEffectRotation = true;
@@ -101,11 +94,13 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
 
   DragTarget buildDragTarget(Content content) => DragTarget(
         builder: (context, candidateData, rejectedData) {
-          GlobalKey key = LabeledGlobalKey(content.num.toString());
+          GlobalKey key = LabeledGlobalKey('');
 
           return Listener(
             onPointerDown: (details) {
-              if (isMenuOpen) closeMenu();
+              if (isMenuOpen) {
+                closeMenu();
+              }
               beginningDragPosition = details.position;
             },
             onPointerMove: (details) {
@@ -114,14 +109,16 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
                 details.position.dy - beginningDragPosition.dy,
               );
               if (currentDragPosition.distance > 20) {
-                if (isMenuOpen) closeMenu();
+                if (isMenuOpen) {
+                  closeMenu();
+                }
               }
             },
-            child: LongPressDraggable(
+            child: Draggable(
               key: key,
               data: content.num,
               maxSimultaneousDrags: 1,
-              hapticFeedbackOnStart: true,
+              // hapticFeedbackOnStart: true,
               onDragStarted: () {
                 if (!isMenuOpen) {
                   openMenu(key);
@@ -132,35 +129,59 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
                 }
               },
               feedback: SizedBox(
-                height: 100,
-                width: 100,
+                height: 200,
+                width: 200,
                 child: ObitAnimation(
-                    controllerx: controllerx2, controllery: controllery2),
+                  controllerx: controllerx2,
+                  controllery: controllery2,
+                ),
               ),
               child: Container(
-                height: 150,
-                width: 150,
-                color: Colors.red,
+                color: Colors.transparent,
+                child: const SizedBox(
+                  height: double.infinity,
+                  width: double.infinity,
+                ),
+                // color: Colors.red,
               ),
             ),
           );
         },
         onWillAccept: (data) {
+          print('1');
+          setState(() {
+            if (showEffectRotation) {
+              startRotation(20, 20);
+            }
+          });
           return true;
         },
-        onAccept: (data) {},
-        onLeave: (data) {},
+        onAccept: (data) {
+          setState(() {
+            startRotation(20, 20);
+          });
+          print('2');
+        },
+        onLeave: (data) {
+          if (data == 0) {
+            data = 2;
+            // setState(() {
+            //   startRotation(20, 20);
+            // });
+
+            print('3 ${data.toString()}');
+          }
+        },
       );
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return GestureDetector(
-      onLongPress: () {
+      onTap: () {
         if (isMenuOpen) {
           closeMenu();
         }
-
         print('object');
       },
       child: Stack(
@@ -178,42 +199,10 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: Stack(
+                fit: StackFit.expand,
                 children: [
                   Positioned(
-                    top: 80,
-                    left: 0,
-                    right: 0,
-                    child: SizedBox(
-                      width: 200,
-                      height: 200,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () => startRotation(20, 20),
-                            child: Container(
-                              width: 170,
-                              height: 170,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: AssetImage("assets/images/pic.jpeg"),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          ),
-                          showEffectRotation
-                              ? ObitAnimation(
-                                  controllerx: controllerx,
-                                  controllery: controllery)
-                              : const SizedBox.shrink(),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 10,
+                    bottom: 0,
                     left: 0,
                     right: 0,
                     child: Column(
@@ -276,7 +265,7 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 10.0),
+                        const SizedBox(height: 3.0),
                         SizedBox(
                           width: size.width - 20,
                           height: 130,
@@ -328,11 +317,56 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
                             ),
                           ),
                         ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 5, bottom: 5),
+                          width: MediaQuery.of(context).size.width,
+                          height: 10,
+                          child: const ClipRRect(
+                            child: LinearProgressIndicator(
+                              value: 0.5,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Color.fromARGB(255, 0, 147, 0),
+                              ),
+                              backgroundColor: Color.fromARGB(255, 0, 0, 0),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
                   Center(
                     child: buildDragTarget(data[0]),
+                  ),
+                  Positioned(
+                    top: 80,
+                    left: 0,
+                    right: 0,
+                    child: SizedBox(
+                      width: 200,
+                      height: 200,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            width: 170,
+                            height: 170,
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: AssetImage("assets/images/pic.png"),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          showEffectRotation
+                              ? ObitAnimation(
+                                  controllerx: controllerx,
+                                  controllery: controllery)
+                              : const SizedBox.shrink(),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),
