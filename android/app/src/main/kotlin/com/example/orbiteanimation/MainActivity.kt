@@ -1,4 +1,4 @@
-package zeroOne.obiteanimation
+package com.example.orbiteanimation
 
 import io.flutter.embedding.android.FlutterActivity
 

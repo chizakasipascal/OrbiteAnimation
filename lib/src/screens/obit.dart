@@ -3,6 +3,8 @@ import 'package:obiteanimation/src/utils/app_theme.dart';
 import 'package:obiteanimation/src/widgets/obitAnimation.dart';
 
 class Orbit extends StatefulWidget {
+  const Orbit({super.key});
+
   @override
   _Orbit createState() => _Orbit();
 }
@@ -64,7 +66,7 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
   void openMenu(GlobalKey key) {
     findButton(key);
     _overlayEntry = _overlayEntryBuilder();
-    Overlay.of(context)!.insert(_overlayEntry!);
+    Overlay.of(context).insert(_overlayEntry!);
     isMenuOpen = !isMenuOpen;
   }
 
@@ -209,7 +211,7 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
                       children: [
                         SizedBox(
                           width: size.width - 20,
-                          height: 130,
+                          // height: 130,
                           child: Card(
                             elevation: 2.0,
                             child: Padding(
@@ -219,7 +221,7 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
                                 children: [
                                   Text(
                                     "RTC - Mensuel - General",
-                                    style: themeData.textTheme.bodyText2!
+                                    style: themeData.textTheme.bodyMedium!
                                         .copyWith(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16.0),
@@ -237,7 +239,7 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
                                           Text(
                                             "2022-05-01",
                                             style: themeData
-                                                .textTheme.bodyText2!
+                                                .textTheme.bodyMedium!
                                                 .copyWith(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 16.0),
@@ -250,7 +252,7 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
                                           Text(
                                             "2022-05-31",
                                             style: themeData
-                                                .textTheme.bodyText2!
+                                                .textTheme.bodyMedium!
                                                 .copyWith(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 16.0),
@@ -293,10 +295,10 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
                                       children: [
                                         Text("Reserve au RTC",
                                             style:
-                                                themeData.textTheme.bodyText2),
+                                                themeData.textTheme.bodyMedium),
                                         Text(
                                           "2022-05-09",
-                                          style: themeData.textTheme.bodyText2!
+                                          style: themeData.textTheme.bodyMedium!
                                               .copyWith(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 16.0),
@@ -304,7 +306,7 @@ class _Orbit extends State<Orbit> with TickerProviderStateMixin {
                                         const Text("17:01"),
                                         Text(
                                           "1-6E62C86342A",
-                                          style: themeData.textTheme.bodyText2!
+                                          style: themeData.textTheme.bodyMedium!
                                               .copyWith(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 16.0),
