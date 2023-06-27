@@ -1,3 +1,3 @@
 # Obiteanimation
 
-> change. Reproduce rotation animation of RTC. a ticket booking application
+> Reproduction of RTC animation rotation. A ticket booking app
